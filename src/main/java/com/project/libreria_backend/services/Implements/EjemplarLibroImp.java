@@ -93,37 +93,6 @@ public class EjemplarLibroImp implements IEjemplarLibro {
         }
     }
 
-    /*@Override
-    public void modificarEjemplar(EjemplarLibroDTO ejemplarLibroDTO, int id) {
-        Optional<EjemplarLibro> optionalEjemplarLibro = repository.findById(id);
-        if(optionalEjemplarLibro.isPresent()){
-            EjemplarLibro ejemplarLibro = optionalEjemplarLibro.get();
-
-            // Actualizar el libro del ejemplar si es necesario
-            if (ejemplarLibroDTO.getId_libro() != ejemplarLibro.getLibro().getId_libro()) {
-                Libro libroAntiguo = repositoryLibro.findById(ejemplarLibro.getLibro().getId_libro())
-                        .orElseThrow(() -> new NoSuchElementException("No se encontró el libro anterior"));
-                libroAntiguo.setStock(libroAntiguo.getStock() - ejemplarLibro.getNum_ingreso());
-                repositoryLibro.save(libroAntiguo);
-
-                Libro libroNuevo = repositoryLibro.findById(ejemplarLibroDTO.getId_libro())
-                        .orElseThrow(() -> new NoSuchElementException("No se encontró el nuevo libro"));
-                libroNuevo.setStock(libroNuevo.getStock() + ejemplarLibro.getNum_ingreso());
-                repositoryLibro.save(libroNuevo);
-
-                ejemplarLibro.setLibro(libroNuevo);
-            }
-
-            // Actualizar el número de ingreso y el estado del ejemplar
-            ejemplarLibro.setNum_ingreso(ejemplarLibroDTO.getNum_ingreso());
-            ejemplarLibro.setEstado_ejemplar(ejemplarLibroDTO.isEstado_ejemplar());
-            repository.save(ejemplarLibro);
-        }
-        else{
-            throw new NoSuchElementException("No se encontró el ejemplar con ID: " + id);
-        }
-    }*/
-
 
     @Override
     public void eliminarEjemplar(int id) {
