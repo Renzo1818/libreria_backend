@@ -1,12 +1,14 @@
 package com.project.libreria_backend.models.dao;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter @Setter
 @Entity
@@ -34,6 +36,10 @@ public class Autor {
 
     @Column(name = "ESTADO")
     private boolean estado;
+
+    @JsonIgnore
+    @OneToMany(targetEntity = Libro.class, mappedBy = "autor", cascade = CascadeType.ALL)
+    private List<Libro> libros;
 
     public Autor() {
     }
