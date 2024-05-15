@@ -98,7 +98,9 @@ public class EjemplarLibroImp implements IEjemplarLibro {
     public void eliminarEjemplar(int id) {
         Optional<EjemplarLibro> optionalEjemplarLibro = repository.findById(id);
         if(optionalEjemplarLibro.isPresent()){
-            repository.delete(optionalEjemplarLibro.get());
+            EjemplarLibro ejemplarLibroE = optionalEjemplarLibro.get();
+            ejemplarLibroE.setEstado_ejemplar(false);
+            repository.save(ejemplarLibroE);
 
             Optional<Libro> optionalLibro = repositoryLibro.findById(optionalEjemplarLibro.get().getLibro().getId_libro());
             if(optionalLibro.isPresent()){

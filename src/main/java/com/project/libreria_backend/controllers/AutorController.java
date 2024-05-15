@@ -43,7 +43,7 @@ public class AutorController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/autores/{id}")
+    @PatchMapping("/autores/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable int id){
         services.eliminar(id);
         return ResponseEntity.ok().build();

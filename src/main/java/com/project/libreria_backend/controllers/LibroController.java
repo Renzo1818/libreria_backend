@@ -39,7 +39,7 @@ public class LibroController {
         services.modificarLibro(libroDTO, id);
         return ResponseEntity.ok().build();
     }
-    @DeleteMapping("libros/{id}")
+    @PatchMapping("/libros/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable int id){
         services.eliminarLibro(id);
         return ResponseEntity.ok().build();

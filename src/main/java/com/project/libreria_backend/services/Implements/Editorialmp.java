@@ -60,7 +60,9 @@ public class Editorialmp implements IEditorial {
     public void eliminarEditorial(int id) {
         Optional<Editorial> optionalEditorial = repository.findById(id);
         if(optionalEditorial.isPresent()){
-            repository.delete(optionalEditorial.get());
+            Editorial editorialE = optionalEditorial.get();
+            editorialE.setEstado(false);
+            repository.save(editorialE);
         }
         else{
             throw new NoSuchElementException("No se encontró la editorial con ID: " + id);

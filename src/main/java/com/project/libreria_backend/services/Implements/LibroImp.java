@@ -86,7 +86,9 @@ public class LibroImp implements ILIbro {
     public void eliminarLibro(int id) {
         Optional<Libro> optionalLibro = repository.findById(id);
         if(optionalLibro.isPresent()){
-            repository.delete(optionalLibro.get());
+            Libro libroE = optionalLibro.get();
+            libroE.setEstado(false);
+            repository.save(libroE);
         }
         else{
             throw new NoSuchElementException("No se encontró el libro con ID: " + id);

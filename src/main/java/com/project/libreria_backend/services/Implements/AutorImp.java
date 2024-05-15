@@ -62,7 +62,9 @@ public class AutorImp implements IAutor {
     public void eliminar(int id) {
         Optional<Autor> optionalAutor = repository.findById(id);
         if(optionalAutor.isPresent()){
-            repository.delete(optionalAutor.get());
+            Autor autorE = optionalAutor.get();
+            autorE.setEstado(false);
+            repository.save(autorE);
         }
         else{
             throw new NoSuchElementException("No se encontró el usuario con ID: " + id);

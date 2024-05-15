@@ -41,7 +41,7 @@ public class EjemplarLibroController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/ejemplares/{id}")
+    @PatchMapping("/ejemplares/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable int id){
         services.eliminarEjemplar(id);
         return ResponseEntity.ok().build();

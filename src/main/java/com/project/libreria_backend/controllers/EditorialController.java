@@ -43,7 +43,7 @@ public class EditorialController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/editoriales/{id}")
+    @PatchMapping("/editoriales/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable int id){
         services.eliminarEditorial(id);
         return ResponseEntity.ok().build();
