@@ -1,14 +1,14 @@
 package com.project.libreria_backend.services.interfaces;
 
 
-import com.project.libreria_backend.models.dao.Empleado;
+import com.project.libreria_backend.models.dto.EmpleadoDTO;
 
 import java.util.List;
 
 public interface IEmpleado {
-    List<Empleado> getAllEmpleados();
-    Empleado getEmpleado(int id);
-    void guardarEmpleado(Empleado empleado);
-    void modificarEmpleado(Empleado empleado, int id);
+    List<EmpleadoDTO> getAllEmpleados();
+    EmpleadoDTO getEmpleado(int id);
+    void guardarEmpleado(EmpleadoDTO empleadoDTO);
+    void modificarEmpleado(EmpleadoDTO empleadoDTO, int id);
     void eliminarEmpleado(int id);
 }

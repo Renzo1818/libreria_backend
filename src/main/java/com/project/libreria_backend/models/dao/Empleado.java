@@ -27,9 +27,9 @@ public class Empleado {
     @Column(name = "ESTADO")
     private boolean estado;
 
-    /*@OneToOne(mappedBy = "empleado", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "empleado", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
-    private Usuario usuario;*/
+    private Usuario usuario;
 
     public Empleado() {
     }
