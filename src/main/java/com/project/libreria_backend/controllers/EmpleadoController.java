@@ -1,6 +1,7 @@
 package com.project.libreria_backend.controllers;
 
 import com.project.libreria_backend.models.dao.Empleado;
+import com.project.libreria_backend.models.dto.EmpleadoDTO;
 import com.project.libreria_backend.services.interfaces.IEmpleado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,15 +17,15 @@ public class EmpleadoController {
     private IEmpleado services;
 
     @GetMapping("/empleados")
-    public ResponseEntity<List<Empleado>> getAll(){
+    public ResponseEntity<List<EmpleadoDTO>> getAll(){
         return ResponseEntity.ok(services.getAllEmpleados());
     }
 
     @GetMapping("/empleados/{id}")
-    public ResponseEntity<Empleado> getById(@PathVariable int id){
-        Empleado empleado = services.getEmpleado(id);
-        if(empleado != null){
-            return ResponseEntity.ok(empleado);
+    public ResponseEntity<EmpleadoDTO> getById(@PathVariable int id){
+        EmpleadoDTO empleadoDTO = services.getEmpleado(id);
+        if(empleadoDTO != null){
+            return ResponseEntity.ok(empleadoDTO);
         }
         else{
             return ResponseEntity.notFound().build();
@@ -32,14 +33,14 @@ public class EmpleadoController {
     }
 
     @PostMapping("/empleados")
-    public ResponseEntity<?> guardar(@RequestBody Empleado empleado){
-        services.guardarEmpleado(empleado);
+    public ResponseEntity<?> guardar(@RequestBody EmpleadoDTO empleadoDTO){
+        services.guardarEmpleado(empleadoDTO);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/empleados/{id}")
-    public ResponseEntity<Void> modificar(@RequestBody Empleado empleado, @PathVariable int id){
-        services.modificarEmpleado(empleado, id);
+    public ResponseEntity<Void> modificar(@RequestBody EmpleadoDTO empleadoDTO, @PathVariable int id){
+        services.modificarEmpleado(empleadoDTO, id);
         return ResponseEntity.ok().build();
     }
 
