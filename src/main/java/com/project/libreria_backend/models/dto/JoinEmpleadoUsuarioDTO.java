@@ -11,7 +11,7 @@ public class JoinEmpleadoUsuarioDTO {
     private String nombre;
     private String apellido;
     private String rol;
-    private String estado;
+    private boolean estado;
     public JoinEmpleadoUsuarioDTO(String nombre, String apellido, String rol) {
         this.nombre = nombre;
         this.apellido = apellido;
