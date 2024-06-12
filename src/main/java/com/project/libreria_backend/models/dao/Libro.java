@@ -1,6 +1,7 @@
 package com.project.libreria_backend.models.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.libreria_backend.models.dao.embedded_id.DetalleVenta;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -55,6 +56,10 @@ public class Libro {
     @JsonIgnore
     @OneToMany(targetEntity = EjemplarLibro.class, mappedBy = "libro", cascade = CascadeType.ALL)
     private List<EjemplarLibro> ejemplarLibros;
+
+    @JsonIgnore
+    @OneToMany(targetEntity = DetalleVenta.class, mappedBy = "libro", cascade = CascadeType.ALL)
+    private List<DetalleVenta> detalleVentas;
 
     public Libro(){
     }

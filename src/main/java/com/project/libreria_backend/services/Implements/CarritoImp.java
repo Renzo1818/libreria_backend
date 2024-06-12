@@ -21,23 +21,6 @@ public class CarritoImp implements ICarrito {
             return null;
         }
     }
-    /*@Override
-    public void agregarItemCarrito(Carrito carrito) {
-        if(carrito != null && carrito.getCantidad() > 0){
-            List<Carrito> lst = lstCarrito;
-            for(Carrito item : lst){
-                if(item.getId_libro() == carrito.getId_libro()){
-                    item.setCantidad(item.getCantidad() + carrito.getCantidad());
-                    break;
-                }
-            }
-            lstCarrito.add(carrito);
-        }else{
-            throw new NoSuchElementException("No se puede agregar un item nulo: " + null);
-        }
-
-    }*/
-
     public void agregarItemCarrito(Carrito carrito) {
         if (carrito != null && carrito.getCantidad() > 0) {
             boolean libroExiste = false;
@@ -103,7 +86,7 @@ public class CarritoImp implements ICarrito {
         if(!lstCarrito.isEmpty()){
             double acumuladorTotal = 0.0;
             for(Carrito item: lstCarrito){
-                acumuladorTotal += item.getImporte();
+                acumuladorTotal += item.getImporte() * item.getCantidad();
             }
             return acumuladorTotal;
         }
