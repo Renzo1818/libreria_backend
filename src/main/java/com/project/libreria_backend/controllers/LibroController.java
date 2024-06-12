@@ -5,6 +5,7 @@ import com.project.libreria_backend.services.interfaces.ILIbro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -30,13 +31,13 @@ public class LibroController {
         }
     }
     @PostMapping("/libros")
-    public ResponseEntity<?> agregar(@RequestBody LibroDTO libroDTO){
-        services.agregarLibro(libroDTO);
+    public ResponseEntity<?> agregar(@RequestParam("file") MultipartFile file, @RequestPart("data") LibroDTO libroDTO){
+        services.agregarLibro(file, libroDTO);
         return ResponseEntity.ok().build();
     }
     @PutMapping("/libros/{id}")
-    public ResponseEntity<Void> modificar(@RequestBody LibroDTO libroDTO, @PathVariable int id){
-        services.modificarLibro(libroDTO, id);
+    public ResponseEntity<Void> modificar(@RequestParam("file") MultipartFile file, @RequestPart("data") LibroDTO libroDTO, @PathVariable int id){
+        services.modificarLibro(file, libroDTO, id);
         return ResponseEntity.ok().build();
     }
     @PatchMapping("/libros/{id}")

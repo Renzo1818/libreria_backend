@@ -47,7 +47,6 @@ public class UsuarioMapper {
                 }).map(source, destination.getTipo());
             }
         });
-        // Configuración para omitir el mapeo del campo Id_usuario
         modelMapper.typeMap(UsuarioDTO.class, Usuario.class)
                 .addMappings(mapper -> mapper.skip(Usuario::setId_usuario));
     }
@@ -59,12 +58,10 @@ public class UsuarioMapper {
     public Usuario convertirToEntity(UsuarioDTO usuarioDTO) {
         Usuario usuario = modelMapper.map(usuarioDTO, Usuario.class);
 
-        // Obtiene el último id_persona registrado
         Empleado ultimaEmpleadoRegistrado = empleadoRepository.findTopByOrderByIdEmpleado();
 
-        usuario.setEmpleado(ultimaEmpleadoRegistrado); // Asigna el objeto Persona al Usuario
+        usuario.setEmpleado(ultimaEmpleadoRegistrado);
 
-        // Genera el id_usuario con el mismo valor que el id_persona
         usuario.setId_usuario(ultimaEmpleadoRegistrado.getId_empleado());
         usuario.setContrasena(passwordEncoder.encode(usuarioDTO.getContrasena()));
 

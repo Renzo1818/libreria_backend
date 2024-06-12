@@ -44,7 +44,7 @@ public class EmpleadoController {
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("empleados/{id}")
+    @PatchMapping("/empleados/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable int id){
         services.eliminarEmpleado(id);
         return ResponseEntity.ok().build();

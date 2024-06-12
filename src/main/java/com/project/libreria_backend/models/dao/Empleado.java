@@ -1,8 +1,11 @@
 package com.project.libreria_backend.models.dao;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Table(name = "EMPLEADO", uniqueConstraints = {
@@ -30,6 +33,11 @@ public class Empleado {
     @OneToOne(mappedBy = "empleado", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Usuario usuario;
+
+    @JsonIgnore
+    @OneToMany(targetEntity = Venta.class, mappedBy = "empleado", cascade = CascadeType.ALL)
+    @Getter @Setter
+    private List<Venta> ventas;
 
     public Empleado() {
     }

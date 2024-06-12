@@ -10,7 +10,12 @@ import com.project.libreria_backend.repository.LibroRepository;
 import com.project.libreria_backend.services.interfaces.ILIbro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -45,13 +50,24 @@ public class LibroImp implements ILIbro {
     }
 
     @Override
-    public void agregarLibro(LibroDTO libroDTO) {
+    public void agregarLibro(MultipartFile file, LibroDTO libroDTO) {
         Libro libro = mapper.convertirToEntity(libroDTO);
+        if (file != null && !file.isEmpty()) {
+            String uploadDir = "src/main/resources/static/";
+            String fileName = file.getOriginalFilename();
+            Path path = Paths.get(uploadDir + fileName);
+            try {
+                Files.write(path, file.getBytes());
+                libro.setRuta_img("static/" + fileName);
+            } catch (IOException e) {
+                throw new RuntimeException("Error al guardar la imagen", e);
+            }
+        }
         repository.save(libro);
     }
 
     @Override
-    public void modificarLibro(LibroDTO libroDTO, int id) {
+    public void modificarLibro(MultipartFile file,LibroDTO libroDTO, int id) {
         Optional<Libro> optionalLibro = repository.findById(id);
         if(optionalLibro.isPresent()){
             Libro libro = optionalLibro.get();
@@ -75,6 +91,19 @@ public class LibroImp implements ILIbro {
             libro.setFecha_publicacion(libroDTO.getFecha_publicacion());
             libro.setRuta_img(libroDTO.getRuta_img());
             libro.setEstado(libroDTO.isEstado());
+
+            if (file != null && !file.isEmpty()) {
+                String uploadDir = "src/main/resources/static/";
+                String fileName = file.getOriginalFilename();
+                Path path = Paths.get(uploadDir + fileName);
+                try {
+                    Files.write(path, file.getBytes());
+                    libro.setRuta_img("static/" + fileName);
+                } catch (IOException e) {
+                    throw new RuntimeException("Error al guardar la imagen", e);
+                }
+            }
+
             repository.save(libro);
         }
         else{
@@ -91,6 +120,20 @@ public class LibroImp implements ILIbro {
             repository.save(libroE);
         }
         else{
+            throw new NoSuchElementException("No se encontró el libro con ID: " + id);
+        }
+    }
+    public void actualizarStock(int id, int cantidadVendida) {
+        Optional<Libro> optionalLibro = repository.findById(id);
+        if(optionalLibro.isPresent()){
+            Libro libro = optionalLibro.get();
+            int nuevoStock = libro.getStock() - cantidadVendida;
+            libro.setStock(nuevoStock);
+            if(nuevoStock <= 0) {
+                libro.setEstado(false);
+            }
+            repository.save(libro);
+        } else {
             throw new NoSuchElementException("No se encontró el libro con ID: " + id);
         }
     }
