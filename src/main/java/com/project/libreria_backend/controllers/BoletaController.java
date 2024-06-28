@@ -37,4 +37,22 @@ public class BoletaController {
             );
         }
     }
+
+    @GetMapping("/boleta/descargar/ultima")
+    public ResponseEntity<InputStreamResource> descargarUltimaBoleta() {
+        try {
+            File file = services.descargarUltimaBoleta();
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .contentLength(file.length())
+                    .body(resource);
+        } catch (FileNotFoundException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Última boleta no encontrada", e
+            );
+        }
+    }
 }

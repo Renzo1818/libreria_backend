@@ -1,6 +1,7 @@
 package com.project.libreria_backend.services.Implements;
 
 import com.docxmerge.Docxmerge;
+import com.project.libreria_backend.models.dao.Venta;
 import com.project.libreria_backend.models.dto.DetalleVentaConsolidadoDTO;
 import com.project.libreria_backend.repository.VentaRepository;
 import com.project.libreria_backend.services.interfaces.IDocxMerge;
@@ -11,10 +12,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+
 @Service
 public class DocxmergeImp implements IDocxMerge {
     @Autowired
@@ -64,6 +63,21 @@ public class DocxmergeImp implements IDocxMerge {
     @Override
     public File descargarBoleta(int id_venta) {
         String rutaBoleta = repositoryVenta.findById(id_venta).get().getRuta_boleta();
+        File file = new File(rutaBoleta);
+        if (!file.exists()) {
+            try {
+                throw new FileNotFoundException("Boleta no encontrada en la ruta especificada.");
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return file;
+    }
+
+    @Override
+    public File descargarUltimaBoleta() {
+        Venta ultimaVenta = repositoryVenta.correlativoVenta();
+        String rutaBoleta = repositoryVenta.findById(ultimaVenta.getId_venta()).get().getRuta_boleta();
         File file = new File(rutaBoleta);
         if (!file.exists()) {
             try {
